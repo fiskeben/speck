@@ -31,6 +31,10 @@ func Edit(data *string) (*string, error) {
 
 	result := string(bytes)
 
+	if len(result) == 0 {
+		return nil, nil
+	}
+
 	return &result, nil
 }
 
