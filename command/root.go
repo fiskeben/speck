@@ -10,6 +10,8 @@ import (
 	"github.com/spf13/viper"
 )
 
+var dryRun bool
+
 // Execute performs the root command.
 func Execute() error {
 	return rootCommand.Execute()
@@ -26,6 +28,7 @@ func init() {
 	initConfig()
 	client = api.NewAPIClient(viper.GetString("token"))
 	args := os.Args[1:]
+	rootCommand.PersistentFlags().BoolVar(&dryRun, "dry-run", false, "verbose output")
 	rootCommand.Flags().Parse(args)
 	rootCommand.SetArgs(args)
 	rootCommand.AddCommand(postCommand)

@@ -26,6 +26,15 @@ func post(cmd *cobra.Command, args []string) {
 		os.Exit(1)
 	}
 
+	if dryRun {
+		fmt.Println("Dry run mode - your post will not be published.")
+		fmt.Println("Here's what your post would be like:")
+		fmt.Println("")
+		fmt.Println(*post)
+		fmt.Println("Run again without the --dry-run flag to publish your words.")
+		return
+	}
+
 	posted, err := client.Post(*post)
 	if err != nil {
 		fmt.Printf("Error creating post: %s\n", err.Error())
