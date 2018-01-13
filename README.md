@@ -55,6 +55,7 @@ These are some of the features I want to add soon:
 * [ ] A `--dry-run` flag.
 * [ ] Parsing the HTML from micro.blog and show posts in a more terminal friendly manner.
 * [ ] Adding help text to the editor (like `git commit`)
+* [ ] Save the post locally as well as posting it to micro.blog.
 * [ ] Multiple accounts.
 * [ ] Implement more of the features from the API such as (un)following, reading users' timelines etc.
 
