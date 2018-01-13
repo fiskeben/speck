@@ -19,7 +19,7 @@ func Execute() error {
 var client api.APIClient
 
 var rootCommand = &cobra.Command{
-	Use: "mcro [command]",
+	Use: "speck [command]",
 	Run: func(cmd *cobra.Command, args []string) {
 		feed, err := client.GetPosts()
 		if err != nil {
@@ -92,7 +92,7 @@ func initConfig() {
 
 	viper.AddConfigPath(home)
 	viper.AddConfigPath(".")
-	viper.SetConfigName(".microdotblog")
+	viper.SetConfigName(".speck")
 
 	if err := viper.ReadInConfig(); err != nil {
 		fmt.Println("Can't read config:", err)

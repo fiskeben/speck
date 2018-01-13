@@ -1,9 +1,10 @@
-.PHONY: build
+.PHONY: build 
 
 build:
-	go build -o mcro *.go
+	go build -o speck *.go
 
 install:
 	go install
 
-clean: rm -f mcro
+clean:
+	rm -f speck

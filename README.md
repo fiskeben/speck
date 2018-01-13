@@ -1,21 +1,24 @@
-# micro.blog CLI
+# speck - a micro.blog CLI
 
-A command line tool for managing a micro.blog account.
+`speck` is a command line tool for managing a micro.blog account.
 
 ## Getting started
 
 ### Building
 
-The tool is written in Go and currently requires you to have Go installed.
+The tool is written in Go and currently requires you to have Go installed
+in order to build the binary.
 
-Use `make install` to install the CLI tool. This will create an executable
-called `mcro` and add it to your Go bin folder.
+`make build` will build the binary and put it in this folder.
 
-### Configuration
+Use `make install` to install `speck`. This will create an executable
+called `speck` and add it to your Go bin folder.
+
+### Configuring `speck`
 
 You need a token from micro.blog to use the tool.
 [Create a new token here](https://micro.blog/account/apps)
-and put it in a file called `.microdotblog.yml`, like this:
+and put it in a file called `.speck.yml`, like this:
 
 ```yaml
 ---
@@ -26,17 +29,17 @@ Save the file to either your home directory or current working directory.
 
 ## Usage and features
 
-Currently the tool is very limited.
+Currently `speck` is very limited.
 It can retrieve your timeline and create new posts.
 
 ### Timeline
 
-Run `mcro` without any parameters to get your timeline.
+Run `speck` without any parameters to get your timeline.
 Pipe the output to `less` to better read it.
 
 ### Posting
 
-Run `micro post` to create a new post.
+Run `speck post` to create a new post.
 This will open your `$EDITOR` (or `vi` if it's not set)
 and you can write your post there. When you save and exit the editor
 the post will be created on your micro blog.
@@ -51,6 +54,7 @@ These are some of the features I want to add soon:
 * [ ] Pass a file to `mcro post` so that you can write posts independently from posting.
 * [ ] A `--dry-run` flag.
 * [ ] Parsing the HTML from micro.blog and show posts in a more terminal friendly manner.
+* [ ] Adding help text to the editor (like `git commit`)
 * [ ] Multiple accounts.
 * [ ] Implement more of the features from the API such as (un)following, reading users' timelines etc.
 
