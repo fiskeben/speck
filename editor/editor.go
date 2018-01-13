@@ -5,12 +5,22 @@ import (
 	"io/ioutil"
 	"os"
 	"os/exec"
+	"strings"
 )
 
 // Edit creates a temporary file and opens it with the user's editor
 // as specified by $EDITOR. If $EDITOR is not set, vi will be used.
 func Edit(data *string) (*string, error) {
-	tempFile, err := makeTemporaryFile(data)
+	fileContents := `
+----------
+Type your post above this line.
+The line and everything below it will be discarded before the post is published.
+`
+	if data != nil {
+		fileContents = *data + fileContents
+	}
+
+	tempFile, err := makeTemporaryFile(fileContents)
 	if err != nil {
 		return nil, err
 	}
@@ -30,6 +40,10 @@ func Edit(data *string) (*string, error) {
 	}
 
 	result := string(bytes)
+	separatorPos := strings.LastIndex(result, "----------")
+	if separatorPos > -1 {
+		result = result[:separatorPos-1]
+	}
 
 	if len(result) == 0 {
 		return nil, nil
@@ -38,19 +52,19 @@ func Edit(data *string) (*string, error) {
 	return &result, nil
 }
 
-func makeTemporaryFile(data *string) (*os.File, error) {
+func makeTemporaryFile(data string) (*os.File, error) {
 	tmpDir := os.TempDir()
 	tmpFile, err := ioutil.TempFile(tmpDir, "micro.blog.post.draft.")
 	if err != nil {
 		fmt.Printf("Error %s while creating tempFile", err.Error())
 		return nil, err
 	}
-	if data != nil {
-		_, err = tmpFile.WriteString(*data)
-		if err != nil {
-			fmt.Printf("Failed to write to temp file: %s\n", err.Error())
-		}
+
+	_, err = tmpFile.WriteString(data)
+	if err != nil {
+		fmt.Printf("Failed to write to temp file: %s\n", err.Error())
 	}
+
 	return tmpFile, nil
 }
 

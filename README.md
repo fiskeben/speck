@@ -54,7 +54,7 @@ These are some of the features I want to add soon:
 * [x] Pass a file to `speck post` so that you can write posts independently from posting.
 * [x] A `--dry-run` flag.
 * [ ] Parsing the HTML from micro.blog and show posts in a more terminal friendly manner.
-* [ ] Adding help text to the editor (like `git commit`)
+* [x] Adding help text to the editor (like `git commit`)
 * [ ] Save the post locally as well as posting it to micro.blog.
 * [ ] Multiple accounts.
 * [ ] Implement more of the features from the API such as (un)following, reading users' timelines etc.
