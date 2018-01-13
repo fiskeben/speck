@@ -51,7 +51,7 @@ your editor will repoen and you need to make it shorter.
 
 These are some of the features I want to add soon:
 
-* [ ] Pass a file to `mcro post` so that you can write posts independently from posting.
+* [x] Pass a file to `speck post` so that you can write posts independently from posting.
 * [ ] A `--dry-run` flag.
 * [ ] Parsing the HTML from micro.blog and show posts in a more terminal friendly manner.
 * [ ] Adding help text to the editor (like `git commit`)
