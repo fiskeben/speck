@@ -15,12 +15,13 @@ var postCommand = &cobra.Command{
 }
 
 func post(cmd *cobra.Command, args []string) {
+	saveFile := cmd.Flag("save").Value.String()
 	var post *string
 
 	if len(args) == 1 {
-		post = getPostFromFile(args[0])
+		post = getPostFromFile(args[0], saveFile)
 	} else {
-		post = getPostFromUser()
+		post = getPostFromUser(saveFile)
 	}
 	if post == nil {
 		os.Exit(1)
@@ -43,7 +44,7 @@ func post(cmd *cobra.Command, args []string) {
 	fmt.Printf("Your post was created: %s\n", posted.URL)
 }
 
-func getPostFromUser() *string {
+func getPostFromUser(saveFile string) *string {
 	var post *string
 	var err error
 	for {
@@ -60,17 +61,37 @@ func getPostFromUser() *string {
 		if len(postStr) > 280 {
 			fmt.Println("The post is too long, please make it shorter.")
 		} else {
+			if saveFile != "" {
+				writePostToFile(saveFile, *post)
+			}
 			return post
 		}
 	}
 }
 
-func getPostFromFile(path string) *string {
+func getPostFromFile(path, saveFile string) *string {
 	contents, err := ioutil.ReadFile(path)
 	if err != nil {
 		fmt.Printf("Unable to read %s: %s\n", path, err.Error())
 		return nil
 	}
 	res := string(contents)
+
+	if saveFile != "" {
+		writePostToFile(saveFile, res)
+	}
+
 	return &res
+}
+
+func writePostToFile(path, contents string) {
+	file, err := os.Create(path)
+	if err != nil {
+		fmt.Printf("Failed to create file '' to save post to: %s\n", err.Error())
+	}
+
+	_, err = file.WriteString(contents)
+	if err != nil {
+		fmt.Printf("Failed to save post to file: %s\n", err.Error())
+	}
 }

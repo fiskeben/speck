@@ -11,13 +11,12 @@ import (
 )
 
 var dryRun bool
+var client api.APIClient
 
 // Execute performs the root command.
 func Execute() error {
 	return rootCommand.Execute()
 }
-
-var client api.APIClient
 
 var rootCommand = &cobra.Command{
 	Use: "speck",
@@ -27,7 +26,12 @@ var rootCommand = &cobra.Command{
 func init() {
 	initConfig()
 	client = api.NewAPIClient(viper.GetString("token"))
+
 	args := os.Args[1:]
+
+	var tmpSaveFile string
+	postCommand.Flags().StringVarP(&tmpSaveFile, "save", "s", "", "Specify the name of a file to save the post to.")
+
 	rootCommand.PersistentFlags().BoolVar(&dryRun, "dry-run", false, "verbose output")
 	rootCommand.Flags().Parse(args)
 	rootCommand.SetArgs(args)
