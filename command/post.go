@@ -5,7 +5,7 @@ import (
 	"io/ioutil"
 	"os"
 
-	"github.com/fiskeben/microdotblog-cli/editor"
+	"github.com/fiskeben/speck/editor"
 	"github.com/spf13/cobra"
 )
 

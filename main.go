@@ -3,7 +3,7 @@ package main
 import (
 	"os"
 
-	"github.com/fiskeben/microdotblog-cli/command"
+	"github.com/fiskeben/speck/command"
 )
 
 func main() {
