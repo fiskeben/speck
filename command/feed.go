@@ -11,28 +11,37 @@ import (
 )
 
 func timeline(cmd *cobra.Command, args []string) {
-	feed, err := client.GetPosts()
-	if err != nil {
-		fmt.Println("Error getting feed")
-		os.Exit(1)
-	}
-
 	limitStr := cmd.Flag("limit").Value.String()
 	limit, err := strconv.Atoi(limitStr)
 	if err != nil {
 		fmt.Printf("Failed to parse limit '%s', falling back to limit to ten items (error: %s)\n", limitStr, err.Error())
 		limit = 10
 	}
+	listFeed(limit)
+}
+
+func listFeed(limit int) {
+	feed, err := client.GetPosts()
+	if err != nil {
+		fmt.Println("Error getting feed")
+		os.Exit(1)
+	}
 
 	items := feed.Items[:limit]
 	width := terminalWidth()
 	line := strings.Repeat("-", width)
 
-	for i, p := range items {
+	for i, item := range items {
+		p, err := newParser(item.ContentHTML)
+		if err != nil {
+			fmt.Printf("Failed to create HTML parser: %s\n", err.Error())
+			continue
+		}
+		content := p.parse()
 		if i > 0 {
 			fmt.Printf("\n%s\n", line)
 		}
-		fmt.Printf("%s (%s) wrote:\n%s\nPosted %s - %s\n", p.Author.Name, p.Author.MicroblogProperties.Username, p.ContentHTML, p.DatePublished, p.URL)
+		fmt.Printf("%s (%s) wrote:\n%s\nPosted %s - %s\n", item.Author.Name, item.Author.MicroblogProperties.Username, content, item.DatePublished, item.URL)
 	}
 }
 
