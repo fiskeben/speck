@@ -33,6 +33,9 @@ func init() {
 	postCommand.Flags().StringVarP(&tmpSaveFile, "save", "s", "", "Specify the name of a file to save the post to.")
 
 	rootCommand.PersistentFlags().BoolVar(&dryRun, "dry-run", false, "verbose output")
+
+	var tmpLimit int
+	rootCommand.Flags().IntVarP(&tmpLimit, "limit", "l", 10, "Limit the number of items to list.")
 	rootCommand.Flags().Parse(args)
 	rootCommand.SetArgs(args)
 	rootCommand.AddCommand(postCommand)
