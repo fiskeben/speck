@@ -58,6 +58,8 @@ These are some of the features I want to add soon:
 * [x] Save the post locally as well as posting it to micro.blog.
 * [ ] Multiple accounts.
 * [ ] Implement more of the features from the API such as (un)following, reading users' timelines etc.
+* [ ] Open user's micro.blog profile/timeline in a browser.
+* [ ] Some sort of CI/CD and Homebrew cask for easy installation.
 
 If you have any requests for new features or just want to give some feedback
 create an issue or reach out at [hi@ricco.me](mailto:hi@ricco.me).
