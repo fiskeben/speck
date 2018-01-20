@@ -3,6 +3,9 @@
 build:
 	go build -o speck *.go
 
+test:
+	go test ./...
+
 install:
 	go install
 
