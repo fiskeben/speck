@@ -1,4 +1,4 @@
-package editor
+package input
 
 import (
 	"fmt"
@@ -8,31 +8,66 @@ import (
 	"strings"
 )
 
-// Edit creates a temporary file and opens it with the user's editor
-// as specified by $EDITOR. If $EDITOR is not set, vi will be used.
-func Edit(data *string) (*string, error) {
+// Editor reads user input by opening an editor (as defined by $EDITOR with
+// fallback to vi).
+type Editor struct {
+	result  *string
+	warning *string
+}
+
+func newEditor(existingContent *string) Reader {
+	return Editor{
+		result: existingContent,
+	}
+}
+
+func (e Editor) Read() (*string, error) {
+	for {
+		err := e.getPostFromUser()
+		if err != nil {
+			return nil, err
+		}
+		if e.result == nil {
+			return nil, fmt.Errorf("post is empty, nothing will be posted to micro.blog")
+		}
+
+		postStr := *e.result
+		if len(postStr) > 280 {
+			errorMessage := "The post is too long, please make it shorter."
+			e.warning = &errorMessage
+		} else {
+			return &postStr, nil
+		}
+	}
+}
+
+func (e *Editor) getPostFromUser() error {
 	fileContents := `
 ----------
 Type your post above this line.
 The line and everything below it will be discarded before the post is published.
 `
-	if data != nil {
-		fileContents = *data + fileContents
+	if e.warning != nil {
+		fileContents = fmt.Sprintf("%s\n\nWarning: %s", fileContents, *e.warning)
+	}
+
+	if e.result != nil {
+		fileContents = *e.result + fileContents
 	}
 
 	tempFile, err := makeTemporaryFile(fileContents)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	err = executeEditor(tempFile)
 	if err != nil {
-		return nil, err
+		return err
 	}
 
 	bytes, err := ioutil.ReadFile(tempFile.Name())
 	if err != nil {
-		return nil, err
+		return fmt.Errorf("failed to read temporary file: %s", err.Error())
 	}
 
 	if err = clearTemporaryFile(tempFile); err != nil {
@@ -46,18 +81,19 @@ The line and everything below it will be discarded before the post is published.
 	}
 
 	if len(result) == 0 {
-		return nil, nil
+		return nil
 	}
 
-	return &result, nil
+	e.result = &result
+
+	return nil
 }
 
 func makeTemporaryFile(data string) (*os.File, error) {
 	tmpDir := os.TempDir()
 	tmpFile, err := ioutil.TempFile(tmpDir, "micro.blog.post.draft.")
 	if err != nil {
-		fmt.Printf("Error %s while creating tempFile", err.Error())
-		return nil, err
+		return nil, fmt.Errorf("Error %s while creating tempFile", err.Error())
 	}
 
 	_, err = tmpFile.WriteString(data)
@@ -77,8 +113,7 @@ func executeEditor(file *os.File) error {
 	if editor == "" {
 		editor, err := exec.LookPath("vi")
 		if err != nil {
-			fmt.Printf("Error %s while looking up for %s!!", editor, "vi")
-			return err
+			return fmt.Errorf("Error %s while looking up for %s", editor, "vi")
 		}
 	}
 
@@ -88,13 +123,11 @@ func executeEditor(file *os.File) error {
 	cmd.Stderr = os.Stderr
 	err := cmd.Start()
 	if err != nil {
-		fmt.Printf("Start failed: %s", err.Error())
-		return err
+		return fmt.Errorf("start failed: %s", err.Error())
 	}
 	err = cmd.Wait()
 	if err != nil {
-		fmt.Printf("Could not wait for editor to finish: %s\n", err.Error())
-		return err
+		return fmt.Errorf("could not wait for editor to finish: %s", err.Error())
 	}
 	return nil
 }
