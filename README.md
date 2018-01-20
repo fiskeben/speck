@@ -47,6 +47,9 @@ the post will be created on your micro blog.
 If what you wrote is longer than 280 characters,
 your editor will repoen and you need to make it shorter.
 
+It's also possible to post something you already have on file,
+like so: `speck post <path/to/file>`
+
 ## TODO and upcoming features
 
 These are some of the features I want to add soon:
@@ -63,3 +66,4 @@ These are some of the features I want to add soon:
 
 If you have any requests for new features or just want to give some feedback
 create an issue or reach out at [hi@ricco.me](mailto:hi@ricco.me).
+You can also [follow me on micro.blog](https://micro.blog/ricco).
