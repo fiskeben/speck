@@ -7,7 +7,7 @@ type Reader interface {
 
 // NewReader returns the correct Reader implementation based on whether an
 // input file was supplied or not.
-func NewReader(inputFile *string) Reader {
+func NewReader(inputFile *string) (Reader, error) {
 	if inputFile == nil {
 		return newEditor(nil)
 	}

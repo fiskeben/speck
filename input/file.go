@@ -2,26 +2,30 @@ package input
 
 import (
 	"fmt"
+	"io"
 	"io/ioutil"
+	"os"
 )
 
 // FileReader reads user input from a file.
 type FileReader struct {
-	fileName string
+	reader io.Reader
 }
 
-func newFileReader(fileName string) Reader {
-	return FileReader{
-		fileName: fileName,
+func newFileReader(fileName string) (Reader, error) {
+	reader, err := os.Open(fileName)
+	if err != nil {
+		return nil, fmt.Errorf("could not open file for reading")
 	}
+	return FileReader{
+		reader: reader,
+	}, nil
 }
 
 func (f FileReader) Read() (*string, error) {
-	path := f.fileName
-
-	contents, err := ioutil.ReadFile(path)
+	contents, err := ioutil.ReadAll(f.reader)
 	if err != nil {
-		return nil, fmt.Errorf("Unable to read '%s': %s", path, err.Error())
+		return nil, fmt.Errorf("unable to read input file: %s", err.Error())
 	}
 	res := string(contents)
 

@@ -15,10 +15,10 @@ type Editor struct {
 	warning *string
 }
 
-func newEditor(existingContent *string) Reader {
+func newEditor(existingContent *string) (Reader, error) {
 	return Editor{
 		result: existingContent,
-	}
+	}, nil
 }
 
 func (e Editor) Read() (*string, error) {

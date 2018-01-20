@@ -22,7 +22,11 @@ func post(cmd *cobra.Command, args []string) {
 		fromFile = &args[0]
 	}
 
-	r := input.NewReader(fromFile)
+	r, err := input.NewReader(fromFile)
+	if err != nil {
+		fail(err)
+	}
+
 	post, err := r.Read()
 
 	if err != nil {
