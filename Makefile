@@ -1,13 +1,13 @@
 .PHONY: build 
 
 build:
-	go build -o speck *.go
+	@go build -o speck *.go
 
 test:
-	go test ./...
+	@go test ./...
 
 install:
-	go install
+	@go install
 
 clean:
-	rm -f speck
+	@rm -f speck

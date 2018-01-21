@@ -108,6 +108,8 @@ func clearTemporaryFile(file *os.File) error {
 	return os.RemoveAll(file.Name())
 }
 
+var execCommand = exec.Command
+
 func executeEditor(file *os.File) error {
 	editor := os.Getenv("EDITOR")
 	if editor == "" {
@@ -117,7 +119,7 @@ func executeEditor(file *os.File) error {
 		}
 	}
 
-	cmd := exec.Command(editor, file.Name())
+	cmd := execCommand(editor, file.Name())
 	cmd.Stdin = os.Stdin
 	cmd.Stdout = os.Stdout
 	cmd.Stderr = os.Stderr
