@@ -4,7 +4,19 @@
 
 ## Getting started
 
-### Building
+### Install with `homebrew`
+
+You can install `speck` with
+[Homebrew](https://brew.sh)
+in two easy steps
+(given that you have Homebrew installed):
+
+1. Add my tap: `brew tap fiskeben/homebrew-tap`
+1. Install `speck`: `brew install speck`
+
+Don't forget to read the paragraph about configuration below.
+
+### Building and installing manually
 
 The tool is written in Go and currently requires you to have Go installed
 in order to build the binary.
@@ -13,6 +25,7 @@ in order to build the binary.
 
 Use `make install` to install `speck`. This will create an executable
 called `speck` and add it to your Go bin folder.
+Add the folder to your `$PATH` if you want.
 
 ### Configuring `speck`
 
