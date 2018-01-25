@@ -39,6 +39,9 @@ func init() {
 	rootCommand.Flags().Parse(args)
 	rootCommand.SetArgs(args)
 	rootCommand.AddCommand(postCommand)
+	rootCommand.AddCommand(followersCommand)
+	rootCommand.AddCommand(followCommand)
+	rootCommand.AddCommand(unfollowCommand)
 }
 
 func initConfig() {
