@@ -31,11 +31,13 @@ Add the folder to your `$PATH` if you want.
 
 You need a token from micro.blog to use the tool.
 [Create a new token here](https://micro.blog/account/apps)
-and put it in a file called `.speck.yml`, like this:
+and put it in a file called `.speck.yml`,
+along with your username, like this:
 
 ```yaml
 ---
-token: your-token-here
+username: your-micro-blog-username
+token: your-token
 ```
 
 Save the file to either your home directory or current working directory.
