@@ -1,8 +1,6 @@
 package blog
 
 import (
-	"fmt"
-
 	api "github.com/fiskeben/microdotblog"
 )
 
@@ -18,11 +16,12 @@ func Reply(client Replyer, ID int64, post string, dryRun bool) (*string, error) 
 		return &result, nil
 	}
 
-	replied, err := client.Reply(ID, post)
+	_, err := client.Reply(ID, post)
 	if err != nil {
 		return nil, err
 	}
 
-	result := fmt.Sprintf("Your reply was posted: %s", replied.URL)
+	// Currently the Micro.blog API doesn't return the created resource.
+	result := "Your reply was posted: %s"
 	return &result, nil
 }

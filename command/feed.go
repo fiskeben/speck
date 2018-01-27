@@ -41,12 +41,13 @@ func listFeed(limit int) {
 		if i > 0 {
 			fmt.Printf("\n%s\n", line)
 		}
-		fmt.Printf("%s (%s) wrote:\n%s\nPosted %s - %s\n",
+		fmt.Printf("%s (%s) wrote:\n%s\nPosted at: %s\nURL: %s\nID: %d\n",
 			item.Author.Name,
 			item.Author.MicroblogProperties.Username,
 			content,
 			item.DatePublished,
-			item.URL)
+			item.URL,
+			item.ID)
 	}
 }
 

@@ -34,11 +34,12 @@ func Post(client Poster, post string, dryRun bool) (*string, error) {
 		return &result, nil
 	}
 
-	posted, err := client.Post(post)
+	_, err := client.Post(post)
 	if err != nil {
 		return nil, err
 	}
 
-	result := fmt.Sprintf("Your post was created: %s\n", posted.URL)
+	// Currently the Micro.blog API doesn't return the created resource.
+	result := "Your post was created"
 	return &result, nil
 }
