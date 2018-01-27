@@ -10,6 +10,7 @@ import (
 	"github.com/spf13/viper"
 )
 
+var version string
 var dryRun bool
 var client api.APIClient
 
@@ -19,8 +20,9 @@ func Execute() error {
 }
 
 var rootCommand = &cobra.Command{
-	Use: "speck",
-	Run: timeline,
+	Use:     "speck",
+	Run:     timeline,
+	Version: version,
 }
 
 func init() {
@@ -38,6 +40,7 @@ func init() {
 	rootCommand.Flags().IntVarP(&tmpLimit, "limit", "l", 10, "Limit the number of items to list.")
 	rootCommand.Flags().Parse(args)
 	rootCommand.SetArgs(args)
+
 	rootCommand.AddCommand(postCommand)
 	rootCommand.AddCommand(followersCommand)
 	rootCommand.AddCommand(followCommand)
