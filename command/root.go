@@ -31,9 +31,6 @@ func init() {
 
 	args := os.Args[1:]
 
-	var tmpSaveFile string
-	postCommand.Flags().StringVarP(&tmpSaveFile, "save", "s", "", "Specify the name of a file to save the post to.")
-
 	rootCommand.PersistentFlags().BoolVar(&dryRun, "dry-run", false, "verbose output")
 
 	var tmpLimit int
@@ -42,6 +39,7 @@ func init() {
 	rootCommand.SetArgs(args)
 
 	rootCommand.AddCommand(postCommand)
+	rootCommand.AddCommand(replyCommand)
 	rootCommand.AddCommand(followersCommand)
 	rootCommand.AddCommand(followCommand)
 	rootCommand.AddCommand(unfollowCommand)

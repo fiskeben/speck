@@ -2,7 +2,6 @@ package blog
 
 import (
 	"fmt"
-	"strings"
 
 	api "github.com/fiskeben/microdotblog"
 )
@@ -31,13 +30,7 @@ type Poster interface {
 // type a post.
 func Post(client Poster, post string, dryRun bool) (*string, error) {
 	if dryRun {
-		response := []string{}
-		response = append(response, "Dry run mode - your post will not be published.")
-		response = append(response, "Here's what your post would be like:")
-		response = append(response, "")
-		response = append(response, post)
-		response = append(response, "Run again without the --dry-run flag to publish your words.")
-		result := strings.Join(response, "\n")
+		result := doDryRun(post)
 		return &result, nil
 	}
 

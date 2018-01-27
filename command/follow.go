@@ -9,18 +9,24 @@ import (
 )
 
 var followersCommand = &cobra.Command{
-	Use: "followers",
-	Run: followers,
+	Use:   "followers",
+	Short: "Get a list of your followers",
+	Long:  "Lists your followers as [username] [real name]",
+	Run:   followers,
 }
 
 var followCommand = &cobra.Command{
-	Use: "follow",
-	Run: follow,
+	Use:   "follow [username]",
+	Short: "Start following another user",
+	Long:  "Start following the specified user",
+	Run:   follow,
 }
 
 var unfollowCommand = &cobra.Command{
-	Use: "unfollow",
-	Run: unfollow,
+	Use:   "unfollow [username]",
+	Short: "Stop following a user",
+	Long:  "Stop following the specified user",
+	Run:   unfollow,
 }
 
 func followers(cmd *cobra.Command, args []string) {
