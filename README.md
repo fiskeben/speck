@@ -71,13 +71,19 @@ These are some of the features I want to add soon:
 
 * [x] Pass a file to `speck post` so that you can write posts independently from posting.
 * [x] A `--dry-run` flag.
-* [ ] Parsing the HTML from micro.blog and show posts in a more terminal friendly manner.
+* [ ] Post display:
+  * [ ] Parsing/stripping HTML
+  * [ ] Limiting output width to avoid super long lines of text
+  * [ ] URL to photos.
 * [x] Adding help text to the editor (like `git commit`)
 * [x] Save the post locally as well as posting it to micro.blog.
 * [ ] Multiple accounts.
-* [ ] Implement more of the features from the API such as (un)following, reading users' timelines etc.
+* [ ] Setup command that writes the `.speck.yml` config.
+* [ ] Implement more of the features from the API such as ~(un)following~, reading users' timelines etc.
 * [ ] Open user's micro.blog profile/timeline in a browser.
-* [ ] Some sort of CI/CD and Homebrew cask for easy installation.
+* [ ] Don't be an "app" with lots of friendly, formatted output. Output should be possible to pipe to another program.
+* [ ] Use `stdin` as source for post text.
+* [ ] Some sort of CI/CD and ~Homebrew cask for easy installation~.
 
 If you have any requests for new features or just want to give some feedback
 create an issue or reach out at [hi@ricco.me](mailto:hi@ricco.me).
