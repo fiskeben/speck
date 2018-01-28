@@ -43,6 +43,7 @@ func init() {
 	rootCommand.AddCommand(followersCommand)
 	rootCommand.AddCommand(followCommand)
 	rootCommand.AddCommand(unfollowCommand)
+	rootCommand.AddCommand(openTimelineCommand)
 }
 
 func initConfig() {
