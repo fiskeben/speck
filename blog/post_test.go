@@ -2,16 +2,15 @@ package blog
 
 import (
 	"fmt"
+	"net/url"
 	"testing"
-
-	api "github.com/fiskeben/microdotblog"
 )
 
 type posterMock struct {
-	result *api.Post
+	result *url.URL
 }
 
-func (p posterMock) Post(message string) (*api.Post, error) {
+func (p posterMock) Post(message string) (*url.URL, error) {
 	if p.result == nil {
 		return nil, fmt.Errorf("Posting failed")
 	}
@@ -19,10 +18,9 @@ func (p posterMock) Post(message string) (*api.Post, error) {
 }
 
 func makePosterMock(result string) Poster {
+	u, _ := url.Parse(result)
 	return posterMock{
-		result: &api.Post{
-			ContentHTML: result,
-		},
+		result: u,
 	}
 }
 

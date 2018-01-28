@@ -2,8 +2,7 @@ package blog
 
 import (
 	"fmt"
-
-	api "github.com/fiskeben/microdotblog"
+	"net/url"
 )
 
 // PostError is returned when unable to publish a post.
@@ -22,7 +21,7 @@ func newPostError(msg string, err error) PostError {
 
 // Poster defines how to post.
 type Poster interface {
-	Post(message string) (*api.Post, error)
+	Post(message string) (*url.URL, error)
 }
 
 // Post publishes a post to micro.blog. If fromFile is specified the contents of
@@ -34,12 +33,11 @@ func Post(client Poster, post string, dryRun bool) (*string, error) {
 		return &result, nil
 	}
 
-	_, err := client.Post(post)
+	url, err := client.Post(post)
 	if err != nil {
 		return nil, err
 	}
 
-	// Currently the Micro.blog API doesn't return the created resource.
-	result := "Your post was created"
+	result := url.String()
 	return &result, nil
 }
