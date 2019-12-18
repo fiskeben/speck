@@ -2,7 +2,8 @@ package blog
 
 import (
 	"fmt"
-	"net/url"
+
+	"github.com/fiskeben/microdotblog"
 )
 
 // PostError is returned when unable to publish a post.
@@ -21,23 +22,22 @@ func newPostError(msg string, err error) PostError {
 
 // Poster defines how to post.
 type Poster interface {
-	Post(message string) (*url.URL, error)
+	Post(message string) (*microdotblog.Post, error)
 }
 
 // Post publishes a post to micro.blog. If fromFile is specified the contents of
 // that file will be published, otherwise an editor will open and let the user
 // type a post.
-func Post(client Poster, post string, dryRun bool) (*string, error) {
+func Post(client Poster, message string, dryRun bool) (*string, error) {
 	if dryRun {
-		result := doDryRun(post)
+		result := doDryRun(message)
 		return &result, nil
 	}
 
-	url, err := client.Post(post)
+	post, err := client.Post(message)
 	if err != nil {
 		return nil, err
 	}
 
-	result := url.String()
-	return &result, nil
+	return &post.URL, nil
 }
