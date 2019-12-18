@@ -1,26 +1,23 @@
 package blog
 
-import (
-	"net/url"
-)
+import "github.com/fiskeben/microdotblog"
 
 // Replyer defines how to reply to other messages.
 type Replyer interface {
-	Reply(ID int64, message string) (*url.URL, error)
+	Reply(ID int64, message string) (*microdotblog.Post, error)
 }
 
 // Reply posts a message as a reply to another message identified by an ID.
-func Reply(client Replyer, ID int64, post string, dryRun bool) (*string, error) {
+func Reply(client Replyer, ID int64, message string, dryRun bool) (*string, error) {
 	if dryRun {
-		result := doDryRun(post)
+		result := doDryRun(message)
 		return &result, nil
 	}
 
-	url, err := client.Reply(ID, post)
+	post, err := client.Reply(ID, message)
 	if err != nil {
 		return nil, err
 	}
 
-	result := url.String()
-	return &result, nil
+	return &post.URL, nil
 }
